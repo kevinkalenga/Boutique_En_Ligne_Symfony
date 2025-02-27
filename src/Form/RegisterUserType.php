@@ -25,12 +25,27 @@ class RegisterUserType extends AbstractType
                 ]
             ])
 
-            ->add('password', PasswordType::class, [
-                'label' => "Votre mot de passe",
-                'attr' => [
-                    'placeholder' => "Choisissez votre mot de passe"
-                ]
+
+            ->add('plainPassword', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'first_options'  => [
+                    'label' => 'Votre mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Choisissez votre mot de passe'
+                    ],
+                    'hash_property_path' => 'password'
+                ],
+                'second_options' => [
+                    'label' => 'Confirmez votre mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Confirmez votre mot de passe'
+                    ]
+                ],
+                'mapped' => false,
             ])
+
+
+
             ->add('firstname', TextType::class, [
                 'label' => 'Votre prénom',
                 'attr' => [
