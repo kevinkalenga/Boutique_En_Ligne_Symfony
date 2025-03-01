@@ -16,7 +16,7 @@
 					<a href="{{ path('app_product',{slug : product.slug})}}" class="text-decoration-none">
 						<img src="/uploads/{{ product.illustration }}" class="img-fluid" alt="">
 						<span class='d-block fw-bold text-black'>{{ product.name }}</span>
-						<span class="d-block">{{ product.PriceWt}}
+						<span class="d-block">{{ product.PriceWt|price}}
 						</span>
 					</a>
 				</div>
