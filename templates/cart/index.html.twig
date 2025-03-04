@@ -5,13 +5,39 @@
 	<div class="container my-5">
 		<h1>Mon panier</h1>
 		<div class="row">
-			<div class="col-md-8">
-				Liste de mes produits
-			</div>
-			<div class="col-md-4">
-				Récap de mon panier (prix, button, commander)
-			</div>
-		</div>
 
+			<div class="col-md-8">
+
+
+				{% for product in cart %}
+					<div class="row mt-2">
+						<div class="col-md-2">
+							<img src="/uploads/{{ product.object.illustration}}" class="img-fluid" alt="{{ product.object.name}}">
+
+						</div>
+						<div class="col-md-6">
+							<strong>{{ product.object.name}}</strong>
+							<span class="d-block small">Prix unitaire :
+								{{ product.object.priceWt|price}}</span>
+						</div>
+						<div
+							class="col-md-2 text-right">
+							{# <a href="{{ path('app_cart_decrease', {id: product.object.id})}}">-</a> #}
+							<span class="badge text-bg-secondary">x{{ product.qty}}</span>
+							<a href="{{ path('app_cart_add', {id: product.object.id})}}">+</a>
+
+
+						</div>
+						<div class="col-md-2">
+							<strong>{{ (product.qty * product.object.priceWt)|price }}</strong>
+
+						</div>
+					</div>
+				{% endfor %}
+				<a href="{{ path('app_cart_remove')}}" class="small mt-3 d-block">Vider le panier</a>
+			</div>
+
+
+		</div>
 	</div>
 {% endblock %}

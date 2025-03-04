@@ -36,6 +36,17 @@ class Cart
         $this->requestStack->getSession()->set('cart', $cart);
     }
 
+
+    // fonction permettant de supprimer totalement le panier
+    public function remove()
+    {
+        // Contenu du panier en cours
+        return $this->requestStack->getSession()->remove('cart');
+    }
+
+
+
+
     // fonction permettant de retourner le panier en cours
     public function getCart()
     {
