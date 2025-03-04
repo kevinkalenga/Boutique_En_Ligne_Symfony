@@ -37,6 +37,22 @@ class Cart
     }
 
 
+    // fonction permettant la suppression d'une qtité de produit au panier
+    public function decrease($id)
+    {
+        $cart = $this->requestStack->getSession()->get('cart');
+        if ($cart[$id]['qty'] > 1) {
+            $cart[$id]['qty'] = $cart[$id]['qty'] - 1;
+        } else {
+
+            unset($cart[$id]);
+        }
+
+        $this->requestStack->getSession()->set('cart', $cart);
+    }
+
+
+
     // fonction permettant de supprimer totalement le panier
     public function remove()
     {
