@@ -3,6 +3,7 @@
 
 namespace App\Controller\Account;
 
+use App\Classe\Cart;
 use App\Form\PasswordUserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -56,7 +57,7 @@ class AddressController extends AbstractController
     // /////////////////////////////////////////////////
 
     #[Route('/compte/adresse/ajouter/{id}', name: 'app_account_address_form', defaults: ['id' => null])]
-    public function form(Request $request, $id, AddressRepository $adressRepository): Response
+    public function form(Request $request, $id, AddressRepository $adressRepository, Cart $cart): Response
     {
         if ($id) {
             $address = $adressRepository->findOneById($id);
@@ -81,7 +82,9 @@ class AddressController extends AbstractController
                 message: "Votre addresse est correctement sauvegarder."
             );
 
-
+            if ($cart->fullQuantity() > 0) {
+                return $this->redirectToRoute('app_order');
+            }
 
             return $this->redirectToRoute('app_account_addresses');
         }
