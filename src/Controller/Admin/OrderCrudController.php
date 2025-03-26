@@ -34,13 +34,24 @@ class OrderCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        $show = Action::new('Afficher')->linkToCrudAction('show');
 
         // suppression des actions ds easyAdmin
         return $actions
-
+            ->add(Crud::PAGE_INDEX, $show)
             ->remove(Crud::PAGE_INDEX, Action::NEW)
             ->remove(Crud::PAGE_INDEX, Action::EDIT)
             ->remove(Crud::PAGE_INDEX, Action::DELETE);
+    }
+
+
+    public function show(AdminContext $context)
+    {
+        $order = $context->getEntity()->getInstance();
+
+        return $this->render('admin/order.html.twig', [
+            'order' => $order
+        ]);
     }
 
 
@@ -51,9 +62,11 @@ class OrderCrudController extends AbstractCrudController
 
             IdField::new('id'),
             DateField::new('createdAt')->setLabel('Date'),
-            NumberField::new('state')->setLabel('Status'),
+            NumberField::new('state')->setLabel('Status')->setTemplatePath('admin/state.html.twig'),
             AssociationField::new('user'),
             TextField::new('carrierName')->setLabel('Transporteur'),
+            NumberField::new('totalTva')->setLabel('Total TVA'),
+            NumberField::new('totalWt')->setLabel('Total TTC')
 
         ];
     }
